@@ -1,0 +1,40 @@
+﻿@using Appslx.Core.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <form method="post" asp-controller="Account" asp-action="Logout" id="logoutForm" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+            @if (User.IsInRole("ADMIN"))
+            {
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Hello @UserManager.GetUserName(User) !
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Manage</a></li>
+                        <li><a href="#">Order List</a></li>
+                        <li><a href="#">Misc</a></li>
+                    </ul>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a href="#">Hello @UserManager.GetUserName(User) !</a>
+                </li>
+            }
+            <li>
+                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log Out</button>
+            </li>
+        </ul>
+    </form>
+
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a id="loginModal" data-toggle="modal" asp-controller="Account" asp-action="LogIn" data-target="#modal-action-login">Log in</a></li>
+    </ul>
+}

@@ -227,7 +227,7 @@ namespace Appslx.Repository.Migrations
             modelBuilder.Entity("Appslx.Core.Models.OrderDetail", b =>
                 {
                     b.HasOne("Appslx.Core.Models.Order", "Order")
-                        .WithMany()
+                        .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
 

@@ -1,0 +1,166 @@
+﻿@using System.Linq
+
+@using Appslx.Core.Models
+@using Appslx.Web.Helper
+@using Appslx.Web.Models.Modal
+@using Microsoft.AspNetCore.Identity
+
+@model List<Appslx.Web.Models.CartViewModel>
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@await Html.PartialAsync("_ModalHeader", new ModalHeader { Heading = "Cart" })
+<div class="modal-body form-horizontal">
+    <div class="row">
+        @if (@Model.Count == 0)
+        {
+            <div><h5 style="text-align: center;">No item yet</h5></div>
+        }
+        else
+        {
+            <table class="table table-striped detail-table">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Code</th>
+                        <th scope="col">Item</th>
+                        <th scope="col">Qty</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var m in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a id="deleteFromCart" asp-controller="Cart" asp-action="DeleteItem" asp-route-code="@m.Code">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </a>
+                            </td>
+                            <td>
+                                @m.Code
+                            </td>
+                            <td>
+                                <strong class="product-title">@m.Name</strong>
+                                <span class="text-offset">@m.Desc.Wrap(20)</span>
+                            </td>
+                            <td class="item-qty">
+                                <input id="adjustQuantity" data-code="@m.Code" type="number" value="@m.Qty" min="1">
+                            </td>
+                            <td class="item-price">@m.Price.ToRupiah()</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">Subtotal</td>
+                        <td>@Model.Sum(x => x.Price).ToRupiah()</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Tax</td>
+                        <td>@Model.Sum(x => x.Tax).ToRupiah()</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Total</td>
+                        <td>@Model.Sum(x => x.Price + x.Tax).ToRupiah()</td>
+                    </tr>
+                </tfoot>
+            </table>
+        }
+
+    </div>
+</div>
+@await Html.PartialAsync("_ModalFooter", new ModalFooter { CancelButtonText = "Close", SubmitButtonText = "Checkout", SubmitButtonID = "checkoutItem" })
+
+
+<script>
+    $("#adjustQuantity").on("input",
+        function() {
+            if (/^0/.test(this.value)) {
+                this.value = this.value.replace(/^0+/, "");
+            }
+        });
+
+    $("#checkoutItem").on("click",
+        function (e) {
+            var issignin = @SignInManager.IsSignedIn(User).ToString().ToLower();
+            
+            if (issignin) {
+                $.ajax({
+                    url: '@Url.Action("OrderItem")',
+                    type: "POST",
+                    dataType: "json",
+                    beforeSend: function() {
+                        $("#myModal").modal("show");
+                    }
+                }).fail(function(data) {
+                    alert("An error occured see console log");
+                    console.log(data);
+                }).done(function(data) {
+                    $("#myModal").modal("hide");
+                    if (data.success) {
+                        swal("Success", data.responseText, "success").then(function(isConfirm) {
+                            if (isConfirm) {
+                                $("#modal-action-cart").modal("hide");
+                            }
+                        });
+
+                    } else {
+                        swal("Error", data.responseText, "error").then(function(isConfirm) {
+                            if (isConfirm) {
+
+                            }
+                        });
+                    }
+                });
+            } else {
+                $("#modal-action-cart").modal('hide');
+                $("#loginModal").click();
+            }
+            
+        });
+
+    $("table tbody tr #deleteFromCart").on("click",
+        function(e) {
+            e.preventDefault();
+            var url = $(this).attr("href");
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "html",
+                beforeSend: function () {
+
+                }
+            }).fail(function(data) {
+                alert("An error occured see console log");
+                console.log(data);
+            }).done(function(data) {
+                $("#modal-content-cart").html(data);
+            });
+        });
+
+    $("table tbody tr #adjustQuantity").on("change",
+        function(e) {
+            var qty = $(this).val();
+            var code = $(this).data("code");
+
+            $.ajax({
+                url: '@Url.Action("AdjustQuantity")',
+                data: {
+                    qty: qty,
+                    code:code
+                },
+                type: "GET",
+                dataType: "html",
+                beforeSend: function () {
+                    $("#myModal").modal("show");
+                }
+            }).fail(function (data) {
+                alert("An error occured see console log");
+                console.log(data);
+            }).done(function (data) {
+                $("#myModal").modal("hide");
+                $("#modal-content-cart").html(data);
+            });
+        });
+</script>

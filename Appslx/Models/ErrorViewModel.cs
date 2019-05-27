@@ -1,6 +1,4 @@
-using System;
-
-namespace Appslx.Models
+namespace Appslx.Web.Models
 {
     public class ErrorViewModel
     {

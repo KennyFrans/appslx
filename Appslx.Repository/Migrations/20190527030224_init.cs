@@ -14,11 +14,11 @@ namespace Appslx.Repository.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Descrition = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: true),
                     CreatedBy = table.Column<string>(maxLength: 256, nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: true),
                     UpdatedBy = table.Column<string>(maxLength: 256, nullable: true),
+                    Descrition = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

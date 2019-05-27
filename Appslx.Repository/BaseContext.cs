@@ -34,8 +34,8 @@ namespace Appslx.Repository
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(@"Data Source=FRANSKE;Initial Catalog=Store;Integrated Security=False;User ID=sa;Password=abc123");
-            optionsBuilder.UseSqlServer(@"Server=.;Database=Store ;integrated security=True;");
+            optionsBuilder.UseSqlServer(@"Data Source=FRANSKE;Initial Catalog=Slxsys;Integrated Security=False;User ID=sa;Password=abc123");
+            //optionsBuilder.UseSqlServer(@"Server=.;Database=Store ;integrated security=True;");
         }
 
         public override int SaveChanges()
@@ -48,7 +48,8 @@ namespace Appslx.Repository
             {
                 if (entry.Entity is IAuditableEntity entity)
                 {
-                    var identityName = Thread.CurrentPrincipal.Identity.Name;
+                    //var identityName = Thread.CurrentPrincipal.Identity.Name;
+                    var identityName = "ADMIN";
                     var now = DateTime.UtcNow;
 
                     if (entry.State == EntityState.Added)

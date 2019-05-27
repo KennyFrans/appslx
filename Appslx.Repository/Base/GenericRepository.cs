@@ -12,7 +12,7 @@ namespace Appslx.Repository.Base
     {
         protected DbContext _entities;
         protected readonly DbSet<T> _dbset;
-
+        
         public GenericRepository(DbContext context)
         {
             _entities = context;
@@ -21,7 +21,6 @@ namespace Appslx.Repository.Base
 
         public virtual List<T> GetAll()
         {
-
             return _dbset.ToListAsync<T>().Result;
         }
 

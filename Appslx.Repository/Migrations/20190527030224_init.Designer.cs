@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Appslx.Repository.Migrations
 {
     [DbContext(typeof(BaseContext))]
-    [Migration("20190526155037_init")]
+    [Migration("20190527030224_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -229,7 +229,7 @@ namespace Appslx.Repository.Migrations
             modelBuilder.Entity("Appslx.Core.Models.OrderDetail", b =>
                 {
                     b.HasOne("Appslx.Core.Models.Order", "Order")
-                        .WithMany()
+                        .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
 

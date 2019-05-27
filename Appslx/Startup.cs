@@ -8,7 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using Appslx.Core.Models;
+using Appslx.Repository.Identity;
 using Appslx.Web.Controllers;
+using Microsoft.AspNetCore.Identity;
+using ReflectionIT.Mvc.Paging;
 
 namespace Appslx.Web
 {
@@ -31,8 +35,34 @@ namespace Appslx.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromHours(5);
+                options.Cookie.HttpOnly = true;
+                // Make the session cookie essential
+                options.Cookie.IsEssential = true;
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddPaging();
+
+            services.AddIdentity<User, UserRole>()
+                .AddDefaultTokenProviders();
+            services.AddTransient<IUserStore<User>, UserStore>();
+            services.AddTransient<IRoleStore<UserRole>, RoleStore>();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.LoginPath = "/Login";
+                options.LogoutPath = "/Logout";
+            });
+
+
 
             //autofac
             services.AddMvc().AddControllersAsServices();
@@ -63,7 +93,9 @@ namespace Appslx.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
             app.UseCookiePolicy();
+            app.UseAuthentication(); //penting jancuk buat login
 
             app.UseMvc(routes =>
             {

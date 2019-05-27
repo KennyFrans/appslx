@@ -1,0 +1,23 @@
+﻿@using Appslx.Web.Helper
+@using Appslx.Web.Models.Modal
+@model Appslx.Web.Models.DetailViewModel
+@await Html.PartialAsync("_ModalHeader", new ModalHeader { Heading = "Product Detail" })
+<div class="modal-body form-horizontal">
+    <div class="row">
+        <table class="table table-striped detail-table">
+            <tr>
+                <td>@Model.Code</td>
+            </tr>
+            <tr>
+                <td>@Model.Name</td>
+            </tr>
+            <tr>
+                <td>@Model.Desc.Wrap(20)</td>
+            </tr>
+            <tr>
+                <td>@Model.UnitPrice.ToRupiah()</td>
+            </tr>
+        </table>
+    </div>
+</div>
+@await Html.PartialAsync("_ModalFooter", new ModalFooter { OnlyCancelButton = true,CancelButtonText = "Close"}) 
