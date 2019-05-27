@@ -1,11 +1,11 @@
-﻿using Appslx.Service.Services;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Appslx.Service.Services;
 using Appslx.Web.Helper;
 using Appslx.Web.Models;
+using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplication1.Controllers
+namespace Appslx.Web.Controllers
 {
     public class CartController : Controller
     {

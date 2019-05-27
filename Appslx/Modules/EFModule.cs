@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Appslx.Repository;
+﻿using Appslx.Repository;
 using Appslx.Repository.Base;
 using Autofac;
 using Microsoft.EntityFrameworkCore;

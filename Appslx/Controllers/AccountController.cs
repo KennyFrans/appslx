@@ -1,10 +1,10 @@
-﻿using Appslx.Core.Models;
+﻿using System.Threading.Tasks;
+using Appslx.Core.Models;
 using Appslx.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
-namespace WebApplication1.Controllers
+namespace Appslx.Web.Controllers
 {
     public class AccountController : Controller
     {

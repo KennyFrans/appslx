@@ -9,7 +9,6 @@ using Appslx.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ReflectionIT.Mvc.Paging;
-using WebApplication1.Controllers;
 
 namespace Appslx.Web.Controllers
 {
