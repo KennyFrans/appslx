@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using Appslx.Core.Models;
+using Appslx.Repository;
 using Appslx.Repository.Identity;
 using Appslx.Web.Controllers;
 using Microsoft.AspNetCore.Identity;
@@ -54,6 +55,7 @@ namespace Appslx.Web
                 .AddDefaultTokenProviders();
             services.AddTransient<IUserStore<User>, UserStore>();
             services.AddTransient<IRoleStore<UserRole>, RoleStore>();
+            services.AddTransient<CurrentUser>();
 
             services.ConfigureApplicationCookie(options =>
             {

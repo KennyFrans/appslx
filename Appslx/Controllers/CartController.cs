@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Appslx.Core.Models;
 using Appslx.Service.Services;
 using Appslx.Web.Helper;
 using Appslx.Web.Models;
@@ -10,10 +11,17 @@ namespace Appslx.Web.Controllers
     public class CartController : Controller
     {
         private readonly IProductService _productService;
-        public CartController(IProductService productService)
+        private readonly IOrderService _orderService;
+        private readonly IOrderDetailService _orderDetailService;
+
+        public CartController(IProductService productService, IOrderService orderService,
+            IOrderDetailService orderDetailService)
         {
             _productService = productService;
+            _orderService = orderService;
+            _orderDetailService = orderDetailService;
         }
+
         public IActionResult Index()
         {
             var listCart = GetCartData();
@@ -70,7 +78,31 @@ namespace Appslx.Web.Controllers
             var listCart = GetCartData();
             if (listCart.Count != 0)
             {
+                var entity = new Order
+                {
+                    OrderStatusId = 1
+                };
+                _orderService.Create(entity);
+
+                var entityDetails  = new List<OrderDetail>();
+                listCart.ForEach(x =>
+                {
+                    var entityDetail = new OrderDetail
+                    {
+                        OrderId = entity.Id,
+                        ProductId = x.Id,
+                        Qty = x.Qty,
+                        UnitPrice = x.Price,
+                        TotalPrice = x.Qty * x.Price
+                    };
+                    entityDetails.Add(entityDetail);
+
+                });
+
+                _orderDetailService.AddRange(entityDetails);
+
                 RemoveCartData();
+
                 return Json(
                     new
                     {

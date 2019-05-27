@@ -106,6 +106,7 @@ namespace Appslx.Web.Controllers
                 {
                     var cart = new CartViewModel
                     {
+                        Id = entity.Id,
                         Code = entity.Code,
                         Desc = entity.Description,
                         Name = entity.Name,

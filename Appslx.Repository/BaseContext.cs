@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using Appslx.Core.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Appslx.Repository
 {
@@ -30,7 +31,6 @@ namespace Appslx.Repository
         }
         public BaseContext()
         {
-
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -48,8 +48,9 @@ namespace Appslx.Repository
             {
                 if (entry.Entity is IAuditableEntity entity)
                 {
-                    //var identityName = Thread.CurrentPrincipal.Identity.Name;
-                    var identityName = "ADMIN";
+                    var user = new CurrentUser(new HttpContextAccessor());
+                    var identityName = user.GetUser();
+
                     var now = DateTime.UtcNow;
 
                     if (entry.State == EntityState.Added)

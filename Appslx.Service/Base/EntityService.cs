@@ -28,6 +28,16 @@ namespace Appslx.Service.Base
             _unitOfWork.Commit();
         }
 
+        public void AddRange(IEnumerable<T> entities)
+        {
+            if (entities == null)
+            {
+                throw new ArgumentNullException("entity");
+            }
+            _repository.AddRange(entities);
+            _unitOfWork.Commit();
+        }
+
 
         public virtual void Update(T entity)
         {

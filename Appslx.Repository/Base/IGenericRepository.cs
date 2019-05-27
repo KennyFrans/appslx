@@ -12,6 +12,7 @@ namespace Appslx.Repository.Base
         List<T> GetAll();
         IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate);
         T Add(T entity);
+        void AddRange(IEnumerable<T> entities);
         T Delete(T entity);
         void Edit(T entity);
         void Save();

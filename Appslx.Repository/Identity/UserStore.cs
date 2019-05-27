@@ -15,6 +15,7 @@ namespace Appslx.Repository.Identity
         protected BaseContext Db = new BaseContext();
 
 
+
         public void Dispose()
         {
             Dispose(true);

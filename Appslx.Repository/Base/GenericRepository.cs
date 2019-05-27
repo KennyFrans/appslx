@@ -36,6 +36,11 @@ namespace Appslx.Repository.Base
             return _dbset.Add(entity).Entity;
         }
 
+        public void AddRange(IEnumerable<T> entities)
+        {
+            _entities.Set<T>().AddRange(entities);
+        }
+
         public virtual T Delete(T entity)
         {
             return _dbset.Remove(entity).Entity;

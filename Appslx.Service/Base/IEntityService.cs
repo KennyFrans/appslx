@@ -12,6 +12,7 @@ namespace Appslx.Service.Base
         where T : BaseEntity
     {
         void Create(T entity);
+        void AddRange(IEnumerable<T> entities);
         void Delete(T entity);
         IEnumerable<T> GetAll();
         void Update(T entity);
