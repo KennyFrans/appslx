@@ -31,6 +31,7 @@ namespace Appslx.Repository
         }
         public BaseContext()
         {
+            
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

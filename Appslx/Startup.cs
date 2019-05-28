@@ -12,6 +12,7 @@ using Appslx.Core.Models;
 using Appslx.Repository;
 using Appslx.Repository.Identity;
 using Appslx.Web.Controllers;
+using DataTables.AspNet.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using ReflectionIT.Mvc.Paging;
 
@@ -50,7 +51,8 @@ namespace Appslx.Web
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddPaging();
-
+            // DataTables.AspNet registration with default options.
+            services.RegisterDataTables();
             services.AddIdentity<User, UserRole>()
                 .AddDefaultTokenProviders();
             services.AddTransient<IUserStore<User>, UserStore>();

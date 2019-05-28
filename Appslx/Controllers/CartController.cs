@@ -96,7 +96,6 @@ namespace Appslx.Web.Controllers
                         TotalPrice = x.Qty * x.Price
                     };
                     entityDetails.Add(entityDetail);
-
                 });
 
                 _orderDetailService.AddRange(entityDetails);

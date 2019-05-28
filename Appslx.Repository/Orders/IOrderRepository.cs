@@ -8,6 +8,7 @@ namespace Appslx.Repository.Orders
 {
     public interface IOrderRepository:IGenericRepository<Order>
     {
+        IEnumerable<Order> GetWithDetails();
         Order GetById(int id);
     }
 }
