@@ -2,10 +2,12 @@
 using Appslx.Service.Services;
 using DataTables.AspNet.AspNetCore;
 using DataTables.AspNet.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Appslx.Web.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;
@@ -30,6 +32,9 @@ namespace Appslx.Web.Controllers
             var entity = data.Item3.Select(x => new
             {
                 x.Id,
+                requestor = x.CreatedBy.ToUpper(),
+                requestdate = x.CreatedDate?.ToString("dddd, dd MMM yyyy HH:MM",
+                    new System.Globalization.CultureInfo("id-ID")),
                 desc = x.OrderStatus.Descrition
             }).ToList();
 

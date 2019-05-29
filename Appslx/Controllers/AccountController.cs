@@ -65,5 +65,10 @@ namespace Appslx.Web.Controllers
         {
             return null;
         }
+
+        public IActionResult Manage()
+        {
+            return View();
+        }
     }
 }

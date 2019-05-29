@@ -2,6 +2,14 @@
 @{
     ViewData["Title"] = "Index";
 }
+@section Css
+{
+    <style>
+        .bottom {
+            padding-top: 20px;
+        }
+    </style>
+}
 <br />
 <div class="row">
     <div class="col-md-12">
@@ -42,9 +50,16 @@
                 },
                 columns: [
                     {
-                        name: 'id',
-                        data: 'id',
-                        title: "Id",
+                        name: 'requestor',
+                        data: 'requestor',
+                        title: "Requestor",
+                        sortable: false,
+                        searchable: false
+                    },
+                    {
+                        name: 'requestdate',
+                        data: 'requestdate',
+                        title: "Request Date",
                         sortable: false,
                         searchable: false
                     },

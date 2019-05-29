@@ -4,10 +4,12 @@ using Appslx.Core.Models;
 using Appslx.Service.Services;
 using Appslx.Web.Helper;
 using Appslx.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Appslx.Web.Controllers
 {
+
     public class CartController : Controller
     {
         private readonly IProductService _productService;

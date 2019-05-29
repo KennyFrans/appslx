@@ -1,20 +1,19 @@
-﻿using Appslx.Web.Modules;
+﻿using Appslx.Core.Models;
+using Appslx.Repository;
+using Appslx.Repository.Identity;
+using Appslx.Web.Modules;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using DataTables.AspNet.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using Appslx.Core.Models;
-using Appslx.Repository;
-using Appslx.Repository.Identity;
-using Appslx.Web.Controllers;
-using DataTables.AspNet.AspNetCore;
-using Microsoft.AspNetCore.Identity;
 using ReflectionIT.Mvc.Paging;
+using System;
 
 namespace Appslx.Web
 {
@@ -62,8 +61,12 @@ namespace Appslx.Web
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.HttpOnly = true;
-                options.LoginPath = "/Login";
-                options.LogoutPath = "/Logout";
+                options.Cookie.Expiration = TimeSpan.FromHours(1);
+                options.ExpireTimeSpan = TimeSpan.FromHours(1);
+                //options.LoginPath = "/";
+                options.LogoutPath = "/";
+                //options.AccessDeniedPath = "/Account/AccessDenied";
+                options.SlidingExpiration = true;
             });
 
 

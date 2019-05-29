@@ -10,15 +10,16 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"  />
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"  />
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
     </environment>
+    @RenderSection("Css", required: false)
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -35,7 +36,6 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Order" asp-action="Index">Order</a></li>
                     <li><a id="detailProductModal" data-toggle="modal" asp-controller="Cart" asp-action="Index" data-target="#modal-action-cart">Cart</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
@@ -77,7 +77,6 @@
     </environment>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-@RenderSection("Scripts", required: false)
-    @RenderSection("ScriptsModal", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
